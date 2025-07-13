@@ -12,7 +12,7 @@ export interface Product {
   instructor: string;
   duration: string;
   rating: number;
-  students: number;
+  countRating: number;
   language: string;
   tags: string[];
   features: string[];
