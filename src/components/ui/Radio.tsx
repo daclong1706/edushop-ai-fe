@@ -1,9 +1,10 @@
 import React from "react";
 import clsx from "clsx";
+import { FiCheckCircle, FiCircle } from "react-icons/fi"; // Icon đẹp
 
 export type RadioProps = {
   name: string;
-  label: string;
+  label: React.ReactNode;
   value: string;
   checkedValue: string;
   onChange: (value: string) => void;
@@ -20,10 +21,13 @@ export const Radio: React.FC<RadioProps> = ({
   disabled = false,
   className = "",
 }) => {
+  const isChecked = checkedValue === value;
+
   return (
     <label
       className={clsx(
-        "flex items-center gap-2 text-sm cursor-pointer select-none",
+        "flex items-center gap-2 cursor-pointer select-none p-1 rounded-md transition",
+        isChecked ? " text-primary" : "border-gray-300 hover:bg-gray-100",
         disabled && "opacity-50 cursor-not-allowed",
         className
       )}
@@ -32,12 +36,28 @@ export const Radio: React.FC<RadioProps> = ({
         type="radio"
         name={name}
         value={value}
-        checked={checkedValue === value}
-        onChange={() => onChange(value)}
+        checked={isChecked}
+        onClick={() => {
+          if (isChecked) {
+            onChange("");
+          }
+        }}
+        onChange={() => {
+          if (!isChecked) {
+            onChange(value);
+          }
+        }}
         disabled={disabled}
-        className="accent-primary w-4 h-4"
+        className="hidden"
       />
-      <span>{label}</span>
+
+      {isChecked ? (
+        <FiCheckCircle className="text-primary w-5 h-5" />
+      ) : (
+        <FiCircle className="text-gray-400 w-5 h-5" />
+      )}
+
+      <span className="text-sm">{label}</span>
     </label>
   );
 };

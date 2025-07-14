@@ -53,17 +53,43 @@ const DynamicFilterRenderer: React.FC<Props> = ({
               </CollapsibleSection>
             );
 
-          case "radio":
+          case "radio": {
+            const radioOptions =
+              filter.key === "rating"
+                ? (filter.options || []).map((value) => ({
+                    value,
+                    label: (
+                      <div className="flex items-center gap-1">
+                        <StarRating
+                          rating={parseFloat(value)}
+                          showValue={false}
+                        />
+                        <span className="text-sm text-gray-600">
+                          Từ {value} trở lên
+                        </span>
+                      </div>
+                    ),
+                  }))
+                : (filter.options || []).map((value) => ({
+                    value,
+                    label: value,
+                  }));
+
             return (
-              <CollapsibleSection key={filter.key} title={filter.label}>
+              <CollapsibleSection
+                key={filter.key}
+                title={filter.label}
+                maxHeightPx={160}
+              >
                 <RadioGroup
                   name={filter.key}
-                  options={filter.options || []}
+                  options={radioOptions}
                   value={currentValue as string}
                   onChange={(val) => setFilters({ ...filters, [key]: val })}
                 />
               </CollapsibleSection>
             );
+          }
 
           case "slider":
             return (
@@ -80,16 +106,6 @@ const DynamicFilterRenderer: React.FC<Props> = ({
                   max={filter.max ?? 10000000}
                   step={filter.step ?? 100000}
                   unit={filter.unit}
-                />
-              </CollapsibleSection>
-            );
-
-          case "rating":
-            return (
-              <CollapsibleSection key={filter.key} title={filter.label}>
-                <StarRating
-                  rating={currentValue as number}
-                  onChange={(val) => setFilters({ ...filters, [key]: val })}
                 />
               </CollapsibleSection>
             );

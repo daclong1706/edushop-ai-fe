@@ -7,8 +7,16 @@ import ProductListCard from "@/components/product/ProductListCard";
 import { SidebarFilter } from "@/components/common/SidebarFilter";
 import { useFilteredProducts } from "@/hooks/useFilteredProducts";
 import type { SortOption } from "@/hooks/useFilteredProducts";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import { Drawer } from "@/components/ui/Drawer";
+import Pagination from "@/components/ui/Pagination";
+import type { Product } from "@/types/product";
+import ProductDetailModal from "@/components/product/ProductDetailModal";
+import { useFavorites } from "@/hooks/useFavorites";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
+import clsx from "clsx";
+import { useViewedProducts } from "@/hooks/useViewedProducts";
+import { fetchSuggestions } from "@/api/suggestions";
+import { toast } from "sonner";
 
 const HomePage: React.FC = () => {
   const [filters, setFilters] = useState<FilterState>(initialFilterState);
@@ -16,6 +24,8 @@ const HomePage: React.FC = () => {
   const [sortOption, setSortOption] = useState<SortOption>("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showSidebar, setShowSidebar] = useState(true);
 
   const pageSize = 6;
   const { products, total } = useFilteredProducts(
@@ -27,8 +37,12 @@ const HomePage: React.FC = () => {
     pageSize
   );
 
-  const isMobile = useIsMobile();
-  const totalPages = Math.ceil(total / pageSize);
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "mobile";
+  const isDesktop = breakpoint === "desktop";
+
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const { addViewedProduct } = useViewedProducts();
 
   const [loading, setLoading] = useState(false);
 
@@ -38,27 +52,67 @@ const HomePage: React.FC = () => {
     return () => clearTimeout(timeout);
   }, [filters, searchText, sortOption, currentPage]);
 
+  const handleViewDetail = (product: Product) => {
+    addViewedProduct(product);
+    setSelectedProduct(product);
+  };
+
+  const [highlightedProducts, setHighlightedProducts] = useState<Product[]>([]);
+  const [isSuggesting, setIsSuggesting] = useState(false);
+
+  const handleGetSuggestions = async () => {
+    setIsSuggesting(true);
+
+    await toast.promise(fetchSuggestions("mock-user-id"), {
+      loading: "Đang lấy gợi ý sản phẩm...",
+      success: (res) => {
+        const existingIds = new Set(highlightedProducts.map((p) => p.id));
+        const uniqueSuggestions = res.filter((p) => !existingIds.has(p.id));
+        setHighlightedProducts(uniqueSuggestions);
+        return "Đã lấy được gợi ý phù hợp!";
+      },
+      error: (err) => {
+        console.error("Failed to fetch suggestions", err);
+        return "Không thể lấy gợi ý lúc này.";
+      },
+    });
+
+    setIsSuggesting(false);
+  };
+
+  const handleToggleFavorite = (productId: string) => {
+    const alreadyLiked = isFavorite(productId);
+    toggleFavorite(productId);
+    toast.success(
+      alreadyLiked
+        ? "Đã bỏ yêu thích sản phẩm"
+        : "Đã thêm sản phẩm vào yêu thích"
+    );
+  };
+
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-2xl font-bold mb-4">Danh sách sản phẩm</h1>
 
-      {isMobile && (
+      {!isMobile && (
         <button
           className="mb-4 px-4 py-2 bg-primary text-white rounded"
-          onClick={() => setDrawerOpen(true)}
+          onClick={() => setShowSidebar((prev) => !prev)}
         >
-          Bộ lọc
+          {showSidebar ? "Ẩn bộ lọc" : "Hiện bộ lọc"}
         </button>
       )}
 
       <div className="flex flex-col md:flex-row gap-6">
-        {!isMobile && (
-          <SidebarFilter
-            filters={filters}
-            setFilters={setFilters}
-            config={filterConfig}
-            canClose={false}
-          />
+        {!isMobile && showSidebar && (
+          <div className="w-full md:max-w-72 shrink-0">
+            <SidebarFilter
+              filters={filters}
+              setFilters={setFilters}
+              config={filterConfig}
+              canClose={false}
+            />
+          </div>
         )}
 
         <div className="flex-1">
@@ -81,67 +135,121 @@ const HomePage: React.FC = () => {
             <option value="ratingDesc">Đánh giá cao</option>
           </select>
 
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+            <h1 className="text-2xl font-bold">Danh sách sản phẩm</h1>
+            <button
+              onClick={handleGetSuggestions}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
+              Gợi ý sản phẩm phù hợp
+            </button>
+          </div>
+
           {loading ? (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <ProductCard key={i} loading />
-              ))}
-            </div>
-          ) : products.length === 0 ? (
-            <div className="text-center text-gray-500 dark:text-gray-400">
-              Không tìm thấy sản phẩm phù hợp với bộ lọc.
-            </div>
-          ) : isMobile ? (
-            <div className="space-y-4">
-              {products.map((product) => (
-                <ProductListCard
-                  key={product.id}
-                  product={product}
-                  onDetailClick={() => {}}
-                />
-              ))}
+            <div
+              className={clsx({
+                "grid grid-cols-2 lg:grid-cols-3 gap-6": isDesktop,
+                "space-y-4 flex flex-col": !isDesktop,
+              })}
+            >
+              {Array.from({ length: 6 }).map((_, i) =>
+                isDesktop ? (
+                  <ProductCard key={i} loading />
+                ) : (
+                  <ProductListCard key={i} loading />
+                )
+              )}
             </div>
           ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onDetailClick={() => {}}
-                />
-              ))}
-            </div>
+            (() => {
+              const mergedProducts = [
+                ...highlightedProducts,
+                ...products.filter(
+                  (p) => !highlightedProducts.find((hp) => hp.id === p.id)
+                ),
+              ];
+
+              if (mergedProducts.length === 0) {
+                return (
+                  <div className="text-center text-gray-500 dark:text-gray-400">
+                    Không tìm thấy sản phẩm phù hợp với bộ lọc.
+                  </div>
+                );
+              }
+
+              return (
+                <div
+                  className={clsx({
+                    "grid grid-cols-1 lg:grid-cols-3 gap-6": isDesktop,
+                    "space-y-4 flex flex-col": !isDesktop,
+                  })}
+                >
+                  {mergedProducts.map((product) =>
+                    isDesktop ? (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onDetailClick={handleViewDetail}
+                        onLikeClick={handleToggleFavorite}
+                        isLiked={isFavorite(product.id)}
+                      />
+                    ) : (
+                      <ProductListCard
+                        key={product.id}
+                        product={product}
+                        onDetailClick={handleViewDetail}
+                        onLikeClick={handleToggleFavorite}
+                        isLiked={isFavorite(product.id)}
+                      />
+                    )
+                  )}
+                </div>
+              );
+            })()
           )}
 
-          <div className="flex justify-center mt-6 gap-2">
-            {Array.from({ length: totalPages }).map((_, index) => {
-              const page = index + 1;
-              return (
-                <button
-                  key={page}
-                  className={`px-3 py-1 border rounded ${
-                    currentPage === page ? "bg-primary text-white" : ""
-                  }`}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </button>
-              );
-            })}
-          </div>
+          <Pagination
+            total={total}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </div>
 
       {isMobile && (
-        <Drawer isOpen={isDrawerOpen} onClose={() => setDrawerOpen(false)}>
-          <SidebarFilter
-            filters={filters}
-            setFilters={setFilters}
-            config={filterConfig}
-            canClose
+        <>
+          <button
+            className="mb-4 px-4 py-2 bg-primary text-white rounded"
+            onClick={() => setDrawerOpen(true)}
+          >
+            Bộ lọc
+          </button>
+
+          <Drawer
+            isOpen={isDrawerOpen}
             onClose={() => setDrawerOpen(false)}
-          />
-        </Drawer>
+            position="right"
+          >
+            <SidebarFilter
+              filters={filters}
+              setFilters={setFilters}
+              config={filterConfig}
+              canClose
+              onClose={() => setDrawerOpen(false)}
+            />
+          </Drawer>
+        </>
+      )}
+
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          isOpen={true}
+          onClose={() => setSelectedProduct(null)}
+          isLiked={isFavorite(selectedProduct.id)}
+          onLikeClick={handleToggleFavorite}
+        />
       )}
     </div>
   );

@@ -2,9 +2,14 @@ import React from "react";
 import clsx from "clsx";
 import { Radio } from "./Radio";
 
+type RadioOption = {
+  label: React.ReactNode;
+  value: string;
+};
+
 type RadioGroupProps = {
   name: string;
-  options: string[];
+  options: RadioOption[];
   value: string;
   onChange: (value: string) => void;
   className?: string;
@@ -21,10 +26,10 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
     <div className={clsx("space-y-2", className)}>
       {options.map((option) => (
         <Radio
-          key={option}
+          key={option.value}
           name={name}
-          label={option}
-          value={option}
+          label={option.label}
+          value={option.value}
           checkedValue={value}
           onChange={onChange}
         />

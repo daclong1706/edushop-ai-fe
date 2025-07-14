@@ -13,7 +13,8 @@ const Header: React.FC = () => {
   const navLinks = [
     { name: "Trang chủ", path: "/" },
     { name: "Yêu thích", path: "/favorites" },
-    { name: "Gợi ý AI", path: "/suggestions" },
+    { name: "Lịch sử", path: "/history" },
+    { name: "Giỏ hàng", path: "/cart" },
   ];
 
   useEffect(() => {

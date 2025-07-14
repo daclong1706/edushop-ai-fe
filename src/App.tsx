@@ -1,19 +1,28 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-// import FavoritesPage from './pages/FavoritesPage';
 import Layout from "./components/layout/Layout";
+import FavoritesPage from "./pages/FavoritesPage";
+import HistoryPage from "./pages/HistoryPage";
+import CartPage from "./pages/CartPage";
+import { CartProvider } from "./context/CartProvider";
+import { Toaster } from "sonner";
 
 function App() {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          {/* <Route path="/favorites" element={<FavoritesPage />} /> */}
-          {/* Thêm các Route khác sau */}
-        </Routes>
-      </Layout>
-    </Router>
+    <CartProvider>
+      <Toaster position="top-right" />
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            {/* Thêm các Route khác sau */}
+          </Routes>
+        </Layout>
+      </Router>
+    </CartProvider>
   );
 }
 

@@ -9,7 +9,7 @@ interface ProductListCardProps {
   product?: Product;
   onDetailClick?: (product: Product) => void;
   isLiked?: boolean;
-  onLikeClick?: (productId: number) => void;
+  onLikeClick?: (productId: string) => void;
   loading?: boolean;
 }
 
@@ -21,7 +21,7 @@ const ProductListCard: React.FC<ProductListCardProps> = ({
   loading = false,
 }) => {
   return (
-    <div className="flex gap-4 py-3 border-b border-gray-300 sm:hidden mx-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+    <div className="flex gap-4 py-3 border-b border-gray-300 mx-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
       {/* Image */}
       <div className="w-24 h-24 rounded bg-gray-200 dark:bg-gray-700 overflow-hidden flex-shrink-0">
         {loading ? (
@@ -93,9 +93,9 @@ const ProductListCard: React.FC<ProductListCardProps> = ({
             </div>
           )}
 
-          {!loading && onLikeClick && (
+          {!loading && product && onLikeClick && (
             <button
-              onClick={() => onLikeClick(Number(product?.id))}
+              onClick={() => onLikeClick(product?.id)}
               className="text-lg"
             >
               {isLiked ? "❤️" : "🤍"}

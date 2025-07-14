@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  type: "class" | "material" | "tool";
+  type: "Lớp học" | "Tài liệu" | "Công cụ";
   category: string;
   level: "Beginner" | "Intermediate" | "Advanced";
   price: number;
@@ -16,4 +16,11 @@ export interface Product {
   language: string;
   tags: string[];
   features: string[];
+}
+
+export interface ViewedProductEntry {
+  product: Product;
+  viewedTimes: number;
+  lastViewedAt: string;
+  history: string[]; // timestamp history
 }

@@ -4,7 +4,7 @@ export const mockProducts: Product[] = [
   {
     id: "p001",
     name: "Lớp giao tiếp 1-1",
-    type: "class",
+    type: "Lớp học",
     category: "Speaking",
     level: "Intermediate",
     price: 1499000,
@@ -25,7 +25,7 @@ export const mockProducts: Product[] = [
   {
     id: "p002",
     name: "Ebook 1000 từ TOEIC thường gặp",
-    type: "material",
+    type: "Tài liệu",
     category: "TOEIC",
     level: "Beginner",
     price: 299000,
@@ -34,7 +34,7 @@ export const mockProducts: Product[] = [
     description: "Tài liệu từ vựng TOEIC phổ biến kèm ví dụ thực tế",
     longDescription:
       "Ebook tập hợp 1000 từ vựng quan trọng nhất trong bài thi TOEIC, kèm ví dụ, ngữ cảnh và bản ghi âm luyện phát âm. Phù hợp cho người mới bắt đầu hoặc cần củng cố từ vựng nền tảng.",
-    instructor: "Antoree Team",
+    instructor: "Michael Chen",
     duration: "Tự học",
     rating: 4.6,
     countRating: 800,
@@ -45,7 +45,7 @@ export const mockProducts: Product[] = [
   {
     id: "p003",
     name: "Khóa luyện IELTS Writing band 7+",
-    type: "class",
+    type: "Lớp học",
     category: "IELTS",
     level: "Advanced",
     price: 1799000,
@@ -65,7 +65,7 @@ export const mockProducts: Product[] = [
   {
     id: "p004",
     name: "Flashcard phản xạ giao tiếp nhanh",
-    type: "tool",
+    type: "Công cụ",
     category: "Speaking",
     level: "Beginner",
     price: 199000,
@@ -74,9 +74,9 @@ export const mockProducts: Product[] = [
     description: "Luyện phản xạ tiếng Anh với 500 mẫu câu thiết yếu",
     longDescription:
       "Flashcard online giúp bạn phản xạ nhanh trong giao tiếp hàng ngày. Có phiên bản app và trình phát âm mẫu để luyện nghe - nói cùng lúc. Tối ưu cho người học bận rộn.",
-    instructor: "Antoree Team",
+    instructor: "Sophia Lee",
     duration: "Tự học",
-    rating: 4.5,
+    rating: 3.9,
     countRating: 2200,
     language: "Vietnamese",
     tags: ["speaking", "flashcard", "daily"],
@@ -85,7 +85,7 @@ export const mockProducts: Product[] = [
   {
     id: "p005",
     name: "Video khóa học Ngữ pháp nền tảng A2",
-    type: "material",
+    type: "Tài liệu",
     category: "Grammar",
     level: "Beginner",
     price: 499000,
@@ -96,7 +96,7 @@ export const mockProducts: Product[] = [
       "Khóa học gồm 30 video bài giảng, minh họa trực quan, bài tập trắc nghiệm và hướng dẫn sử dụng ngữ pháp trong văn cảnh thực tế. Phù hợp cho học viên mất gốc hoặc đang ôn thi A2-B1.",
     instructor: "David Lee",
     duration: "12 giờ video",
-    rating: 4.7,
+    rating: 3.4,
     countRating: 600,
     language: "Vietnamese",
     tags: ["grammar", "a2", "beginner"],
@@ -105,7 +105,7 @@ export const mockProducts: Product[] = [
   {
     id: "p006",
     name: "Lớp luyện nghe IELTS Listening band 7+",
-    type: "class",
+    type: "Lớp học",
     category: "IELTS",
     level: "Intermediate",
     price: 1599000,
@@ -125,7 +125,7 @@ export const mockProducts: Product[] = [
   {
     id: "p007",
     name: "Combo luyện giao tiếp văn phòng",
-    type: "material",
+    type: "Tài liệu",
     category: "Business English",
     level: "Intermediate",
     price: 799000,
@@ -145,7 +145,7 @@ export const mockProducts: Product[] = [
   {
     id: "p008",
     name: "AI Chatbot luyện nói tiếng Anh mỗi ngày",
-    type: "tool",
+    type: "Công cụ",
     category: "Speaking",
     level: "Beginner",
     price: 249000,
@@ -165,7 +165,7 @@ export const mockProducts: Product[] = [
   {
     id: "p009",
     name: "Khóa học Tiếng Anh trẻ em (7-12 tuổi)",
-    type: "class",
+    type: "Lớp học",
     category: "Kids",
     level: "Beginner",
     price: 1199000,
@@ -185,7 +185,7 @@ export const mockProducts: Product[] = [
   {
     id: "p010",
     name: "Kho đề luyện thi TOEIC có giải thích chi tiết",
-    type: "material",
+    type: "Tài liệu",
     category: "TOEIC",
     level: "Intermediate",
     price: 399000,
@@ -194,7 +194,7 @@ export const mockProducts: Product[] = [
     description: "Tổng hợp 10 đề TOEIC chuẩn, giải thích chi tiết từng câu",
     longDescription:
       "Kho đề gồm 10 bộ đề TOEIC đầy đủ 2 kỹ năng Listening và Reading, có đáp án và giải thích chi tiết từng câu. Được cập nhật theo format mới nhất. Phù hợp để luyện thi sát đề thật.",
-    instructor: "Antoree TOEIC Team",
+    instructor: "Daniel Kim",
     duration: "Tự học",
     rating: 4.7,
     countRating: 950,

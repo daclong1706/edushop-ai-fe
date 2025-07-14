@@ -13,13 +13,22 @@ export const useFilteredProducts = (
   pageSize: number
 ) => {
   const filtered = useMemo(() => {
+    const priceRanges: Record<string, (price: number) => boolean> = {
+      "Dưới 500,000₫": (price) => price < 500000,
+      "500,000₫ - 1,000,000₫": (price) => price >= 500000 && price <= 1000000,
+      "1,000,000₫ - 2,000,000₫": (price) => price > 1000000 && price <= 2000000,
+      "Trên 2,000,000₫": (price) => price > 2000000,
+    };
+
     return products.filter((product) => {
+      // Tìm kiếm
       if (
         searchText &&
         !product.name.toLowerCase().includes(searchText.toLowerCase())
       )
         return false;
 
+      // Loại
       if (
         filters.type &&
         filters.type.length &&
@@ -27,6 +36,7 @@ export const useFilteredProducts = (
       )
         return false;
 
+      // Chủ đề
       if (
         filters.category &&
         filters.category.length &&
@@ -34,15 +44,37 @@ export const useFilteredProducts = (
       )
         return false;
 
-      if (filters.level && product.level !== filters.level) return false;
-
+      // Trình độ
       if (
-        filters.price &&
-        (product.price < filters.price[0] || product.price > filters.price[1])
+        filters.level &&
+        filters.level.length &&
+        !filters.level.includes(product.level)
       )
         return false;
 
-      if (filters.rating !== undefined && product.rating < filters.rating)
+      // if (
+      //   filters.price &&
+      //   (product.price < filters.price[0] || product.price > filters.price[1])
+      // )
+      //   return false;
+
+      // Giá
+      if (
+        filters.price &&
+        filters.price.length > 0 &&
+        !filters.price.some((rangeLabel) =>
+          priceRanges[rangeLabel]?.(product.price)
+        )
+      ) {
+        return false;
+      }
+
+      // Rating
+      if (
+        filters.rating !== undefined &&
+        !isNaN(Number(filters.rating)) &&
+        product.rating < Number(filters.rating)
+      )
         return false;
 
       return true;

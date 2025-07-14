@@ -6,14 +6,20 @@ export type CollapsibleSectionProps = {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
-  maxHeightPx?: number; // Truyền thẳng pixel thay vì Tailwind
+  maxHeightPx?: number;
+  className?: string;
+  titleClassName?: string;
+  scrollOnExpand?: boolean;
 };
 
 export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   title,
   children,
   defaultOpen = true,
-  maxHeightPx = 120, // mặc định như max-h-40 (10rem)
+  maxHeightPx = 120,
+  className = "",
+  titleClassName = "",
+  scrollOnExpand = false,
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -35,12 +41,19 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   }, [children, maxHeightPx, isExpanded]);
 
   return (
-    <div className="border-b border-gray-200 dark:border-gray-700 py-2">
+    <div
+      className={clsx(
+        "border-b border-gray-200 dark:border-gray-700 py-2",
+        className
+      )}
+    >
       <button
         className="flex items-center justify-between w-full gap-2 text-left font-medium text-gray-800 dark:text-gray-200 hover:text-primary min-h-[40px]"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span className="flex-1">{title}</span>
+        <span className={clsx("flex-1 font-bold", titleClassName)}>
+          {title}
+        </span>
         <svg
           className={clsx(
             "w-4 h-4 shrink-0 transform transition-transform duration-200",
@@ -68,10 +81,12 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
           ref={contentRef}
           style={{
             maxHeight: isOpen && !isExpanded ? `${maxHeightPx}px` : "none",
-            overflow: "hidden",
             transition: "max-height 0.3s ease",
           }}
-          className="relative space-y-2 pr-1 mb-2"
+          className={clsx("relative space-y-2 pr-1 mb-2", {
+            "overflow-hidden": !isExpanded,
+            "overflow-y-auto custom-scrollbar": isExpanded && scrollOnExpand,
+          })}
         >
           {children}
 
