@@ -15,6 +15,7 @@ import Pagination from "@/components/ui/Pagination";
 import { filterConfig } from "@/config/filterConfig";
 import { mockProducts } from "@/data/products";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
+import { useDebounce } from "@/hooks/useDebounce";
 import type { SortOption } from "@/hooks/useFilteredProducts";
 import { useFilteredProducts } from "@/hooks/useFilteredProducts";
 import { useProductActions } from "@/hooks/useProductActions";
@@ -29,7 +30,7 @@ import { toast } from "sonner";
 
 const HomePage: React.FC = () => {
   const [filters, setFilters] = useState<FilterState>(initialFilterState);
-  // const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [sortOption, setSortOption] = useState<SortOption>("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -37,8 +38,8 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const searchText = searchParams.get("search") || "";
+  // const searchParams = new URLSearchParams(location.search);
+  // const searchText = searchParams.get("search") || "";
 
   const pageSize = 6;
   const { products, total } = useFilteredProducts(
@@ -93,10 +94,12 @@ const HomePage: React.FC = () => {
     });
   };
 
-  const handleSearchChange = (value: string) => {
+  const debouncedSearch = useDebounce(searchText, 400); // 400ms
+
+  useEffect(() => {
     const newParams = new URLSearchParams(location.search);
-    if (value) {
-      newParams.set("search", value);
+    if (debouncedSearch) {
+      newParams.set("search", debouncedSearch);
     } else {
       newParams.delete("search");
     }
@@ -105,7 +108,7 @@ const HomePage: React.FC = () => {
       pathname: location.pathname,
       search: newParams.toString(),
     });
-  };
+  }, [debouncedSearch]);
 
   const sortOptions = [
     { label: "Mới nhất", value: "newest" },
@@ -177,7 +180,7 @@ const HomePage: React.FC = () => {
 
       {isMobile && (
         <>
-          <SearchBar value={searchText} onChange={handleSearchChange} />
+          <SearchBar value={searchText} onChange={setSearchText} />
           <div className="flex gap-1 mt-3">
             <Button
               outline

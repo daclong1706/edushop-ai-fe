@@ -1,5 +1,6 @@
 // src/components/common/SearchBar.tsx
 import { FiSearch } from "react-icons/fi";
+import { Input } from "../ui/Input";
 
 type SearchBarProps = {
   placeholder?: string;
@@ -24,6 +25,12 @@ export const SearchBar = ({
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
       />
+      {/* <Input
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange?.(e.target.value)}
+      /> */}
     </div>
   );
 };
