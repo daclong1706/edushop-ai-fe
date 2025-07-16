@@ -7,6 +7,7 @@ export type InputProps = {
   type?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   error?: string;
   iconLeft?: React.ReactNode;
@@ -21,6 +22,7 @@ export const Input: React.FC<InputProps> = ({
   type = "text",
   value,
   onChange,
+  onKeyDown,
   disabled = false,
   error,
   iconLeft,
@@ -37,10 +39,11 @@ export const Input: React.FC<InputProps> = ({
       )}
       <div
         className={clsx(
-          "flex items-center rounded border transition-all duration-200",
+          "flex items-center rounded border border-gray-300 transition-all duration-200",
           "bg-background text-foreground",
           error ? "border-danger" : "border-border focus-within:border-primary",
-          disabled && "opacity-50 cursor-not-allowed"
+          disabled && "opacity-50 cursor-not-allowed",
+          className
         )}
       >
         {iconLeft && <span className="pl-3 text-muted">{iconLeft}</span>}
@@ -48,6 +51,7 @@ export const Input: React.FC<InputProps> = ({
           type={type}
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
           placeholder={placeholder}
           disabled={disabled}
           className={clsx(

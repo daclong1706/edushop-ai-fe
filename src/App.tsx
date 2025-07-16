@@ -6,29 +6,34 @@ import HistoryPage from "./pages/HistoryPage";
 import CartPage from "./pages/CartPage";
 import { CartProvider } from "./context/CartProvider";
 import { Toaster } from "sonner";
+import NotFound from "./pages/NotFound";
+import { FavoritesProvider } from "./context/FavoritesProvider";
 
 function App() {
   return (
     <CartProvider>
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          classNames: {
-            icon: "text-primary",
-          },
-        }}
-      />
-      <Router>
-        <Layout>
+      <FavoritesProvider>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            classNames: {
+              icon: "text-primary",
+            },
+          }}
+        />
+        <Router>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/favorites" element={<FavoritesPage />} />
-            <Route path="/history" element={<HistoryPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            {/* Thêm các Route khác sau */}
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="favorites" element={<FavoritesPage />} />
+              <Route path="history" element={<HistoryPage />} />
+              <Route path="cart" element={<CartPage />} />
+            </Route>
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
-        </Layout>
-      </Router>
+        </Router>
+      </FavoritesProvider>
     </CartProvider>
   );
 }

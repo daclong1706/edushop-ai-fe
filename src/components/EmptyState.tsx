@@ -6,6 +6,7 @@ interface EmptyStateProps {
   description?: string;
   cta?: React.ReactNode;
   className?: string;
+  imageClassName?: string;
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({
@@ -14,6 +15,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   description,
   cta,
   className = "",
+  imageClassName,
 }) => {
   return (
     <div
@@ -23,7 +25,9 @@ const EmptyState: React.FC<EmptyStateProps> = ({
         <img
           src={imageSrc}
           alt="Empty"
-          className="w-56 h-56 md:w-64 md:h-64 object-contain mb-4 opacity-80"
+          className={`object-contain mb-4 opacity-80 ${
+            imageClassName ?? "w-56 h-56 md:w-64 md:h-64"
+          }`}
         />
       )}
       {title && (

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import clsx from "clsx";
 import { MdClose } from "react-icons/md";
 
@@ -27,7 +28,6 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  // Handle ESC
   useEffect(() => {
     if (!closeOnEsc) return;
 
@@ -39,25 +39,22 @@ export const Modal: React.FC<ModalProps> = ({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [closeOnEsc, onClose]);
 
-  // Animate open/close
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-
     if (open) {
       setIsVisible(true);
     } else {
       timeout = setTimeout(() => setIsVisible(false), 200);
     }
-
     return () => clearTimeout(timeout);
   }, [open]);
 
   if (!open && !isVisible) return null;
 
-  return (
+  const modalContent = (
     <div
       className={clsx(
-        "fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm transition-opacity duration-200",
+        "fixed inset-0 z-[1000] flex items-center justify-center bg-black/20 backdrop-blur-sm transition-opacity duration-200",
         overlayClassName,
         open ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
@@ -65,7 +62,6 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div
         className={clsx(
-          // responsive width
           "w-full mx-4 sm:min-w-gl md:min-w-2xl",
           "transform transition-all duration-200",
           open
@@ -85,7 +81,6 @@ export const Modal: React.FC<ModalProps> = ({
         <div className="px-6 py-4 max-h-[65vh] overflow-y-auto custom-scrollbar">
           {children}
         </div>
-
         {footer && (
           <div className="relative">
             <div className="absolute -top-9 left-0 w-full h-10 pointer-events-none bg-gradient-to-t from-white dark:from-gray-700 to-transparent" />
@@ -102,4 +97,6 @@ export const Modal: React.FC<ModalProps> = ({
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.body);
 };

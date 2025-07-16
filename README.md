@@ -1,69 +1,106 @@
-# React + TypeScript + Vite
+# Edushop AI – Sàn giáo dục thương mại điện tử tích hợp AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Dự án Front-end mô phỏng một sàn thương mại điện tử cho sản phẩm giáo dục, giúp người học tìm kiếm, lọc, và khám phá các khóa học phù hợp – tích hợp gợi ý AI dựa trên hành vi người dùng.
 
-Currently, two official plugins are available:
+## Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Xem bản demo trên Vercel tại đây](https://edushop-ai-fe.vercel.app/)
 
-## Expanding the ESLint configuration
+## Ảnh minh họa
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Trang chủ                       | Giỏ hàng và gợi ý trong giỏ hàng | Chatbot AI                       |
+| ------------------------------- | -------------------------------- | -------------------------------- |
+| ![Trang chủ](./public/home.png) | ![Cart](./public/cart.png)       | ![Chatbot](./public/chatbot.png) |
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tính năng chính
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 1. Danh sách sản phẩm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Danh sách sản phẩm giáo dục: tên, mô tả, giá, ảnh, đánh giá...
+- Thiết kế hiện đại, responsive, thân thiện người dùng.
+
+### 2. Tìm kiếm & Bộ lọc
+
+- Tìm kiếm sản phẩm theo tên.
+- Bộ lọc động theo loại, cấp độ, giá, đánh giá...
+- Responsive sidebar filter (ẩn/hiện linh hoạt trên mobile).
+
+### 3. Gợi ý thông minh (AI)
+
+- Nút "Gợi ý sản phẩm phù hợp" dựa trên hành vi người dùng (đã xem, đã thích, lịch sử xem).
+- Có loading skeleton và xử lý lỗi khi API fail.
+
+### 4. Yêu thích sản phẩm
+
+- Đánh dấu yêu thích sản phẩm.
+- Trang riêng hiển thị danh sách sản phẩm yêu thích.
+- Thông báo trạng thái (toast) khi thêm/bỏ yêu thích.
+
+### 5. Lịch sử xem sản phẩm
+
+- Ghi nhớ các sản phẩm đã click "Xem chi tiết".
+- Dùng để hỗ trợ logic gợi ý AI.
+
+### 6. Chatbot AI
+
+- Giao diện chatbot AI đơn giản.
+- Tích hợp **Gemma AI** để tư vấn khóa học phù hợp.
+
+### 7. Giỏ hàng (Cart)
+
+- Thêm/xóa sản phẩm vào giỏ, tính tổng tiền.
+- Giao diện đơn giản, dễ sử dụng.
+
+## Công nghệ sử dụng
+
+| Công nghệ     | Mô tả                            |
+| ------------- | -------------------------------- |
+| React         | Thư viện chính xây dựng UI       |
+| TypeScript    | Kiểm tra kiểu tĩnh, code rõ ràng |
+| Tailwind CSS  | Thiết kế hiện đại, responsive    |
+| Framer Motion | Animation mượt mà                |
+| React Router  | Quản lý định tuyến trang         |
+| Axios         | Gọi API giả lập                  |
+| Sonner        | Toast notification               |
+| LocalStorage  | Lưu yêu thích & lịch sử xem      |
+
+---
+
+## Cách chạy dự án
+
+### 1. Clone project
+
+```bash
+git clone https://github.com/daclong1706/edushop-ai-fe.git
+cd edushop-ai
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Cài đặt dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# hoặc
+yarn install
 ```
+
+### 3. Chạy local dev
+
+```bash
+npm run dev
+```
+
+### 4. Build production (tuỳ chọn)
+
+```bash
+npm run build
+```
+
+## Tác giả
+
+Tên: Nguyễn Đắc Long
+
+Email: [daclong.k17@gmail.com]
+
+GitHub: https://github.com/daclong1706
+
+Demo: https://edushop-ai-fe.vercel.app

@@ -1,7 +1,5 @@
 // src/types/filter.ts
 
-export type FilterType = "text" | "select" | "range";
-
 export type FilterState = {
   type?: string[];
   category?: string[];

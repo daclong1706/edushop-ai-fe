@@ -30,7 +30,8 @@ export const mockProducts: Product[] = [
     level: "Beginner",
     price: 299000,
     originalPrice: 499000,
-    image: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400",
+    image:
+      "https://plus.unsplash.com/premium_photo-1666739032615-ecbd14dfb543?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZW5nbGlzaHxlbnwwfHwwfHx8MA%3D%3D",
     description: "Tài liệu từ vựng TOEIC phổ biến kèm ví dụ thực tế",
     longDescription:
       "Ebook tập hợp 1000 từ vựng quan trọng nhất trong bài thi TOEIC, kèm ví dụ, ngữ cảnh và bản ghi âm luyện phát âm. Phù hợp cho người mới bắt đầu hoặc cần củng cố từ vựng nền tảng.",
@@ -70,7 +71,8 @@ export const mockProducts: Product[] = [
     level: "Beginner",
     price: 199000,
     originalPrice: 299000,
-    image: "https://images.unsplash.com/photo-1584697964193-901a9c596b53?w=400",
+    image:
+      "https://media.istockphoto.com/id/2160572109/fr/photo/cartes-de-mots-en-papier-avec-texte-toujours-g%C3%A9n%C3%A9ralement-souvent-parfois-rarement-rarement.webp?a=1&b=1&s=612x612&w=0&k=20&c=PoMJOteU9GyeU_Oetidhm4JV4sSyd0M8CQ1SB0H1UiY=",
     description: "Luyện phản xạ tiếng Anh với 500 mẫu câu thiết yếu",
     longDescription:
       "Flashcard online giúp bạn phản xạ nhanh trong giao tiếp hàng ngày. Có phiên bản app và trình phát âm mẫu để luyện nghe - nói cùng lúc. Tối ưu cho người học bận rộn.",
@@ -130,7 +132,8 @@ export const mockProducts: Product[] = [
     level: "Intermediate",
     price: 799000,
     originalPrice: 1299000,
-    image: "https://images.unsplash.com/photo-1573164713347-df1e83d10b94?w=400",
+    image:
+      "https://plus.unsplash.com/premium_photo-1661767467261-4a4bed92a507?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29tbXVuaWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
     description: "Tài liệu giao tiếp trong môi trường công sở quốc tế",
     longDescription:
       "Bao gồm slide, file mẫu hội thoại, email, hội nghị, và gọi điện thoại trong môi trường doanh nghiệp quốc tế. Phù hợp cho người đi làm nâng cao kỹ năng giao tiếp chuyên nghiệp.",
@@ -150,7 +153,8 @@ export const mockProducts: Product[] = [
     level: "Beginner",
     price: 249000,
     originalPrice: 399000,
-    image: "https://images.unsplash.com/photo-1581091870627-3f67c92e2b26?w=400",
+    image:
+      "https://plus.unsplash.com/premium_photo-1682023587356-86065925727a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2hhdGJvdHxlbnwwfHwwfHx8MA%3D%3D",
     description: "Luyện nói mỗi ngày với Chatbot phản xạ thông minh",
     longDescription:
       "Ứng dụng luyện nói tiếng Anh bằng AI với hơn 500 kịch bản giao tiếp hằng ngày. Phân tích ngữ âm và gợi ý sửa lỗi phát âm. Tích hợp luyện theo chủ đề và theo khung giờ.",
@@ -170,7 +174,8 @@ export const mockProducts: Product[] = [
     level: "Beginner",
     price: 1199000,
     originalPrice: 1699000,
-    image: "https://images.unsplash.com/photo-1595526114035-53c0c3d0d457?w=400",
+    image:
+      "https://plus.unsplash.com/premium_photo-1663088789996-66aa5385b58b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8a2lkJTIwc3R1ZHl8ZW58MHx8MHx8fDA%3D",
     description: "Lớp học tiếng Anh cơ bản cho trẻ em, giáo viên bản ngữ",
     longDescription:
       "Khóa học dành riêng cho trẻ em với hình ảnh minh họa sinh động, phương pháp học qua chơi, giúp trẻ làm quen từ vựng và phản xạ giao tiếp tự nhiên qua Zoom cùng giáo viên nước ngoài.",
