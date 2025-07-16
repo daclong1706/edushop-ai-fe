@@ -3,7 +3,7 @@ import type { Product } from "../types/product";
 export const mockProducts: Product[] = [
   {
     id: "p001",
-    name: "Lớp giao tiếp 1-1",
+    name: "Lớp giao tiếp 1-1 với người Mỹ",
     type: "Lớp học",
     category: "Speaking",
     level: "Intermediate",
@@ -30,7 +30,7 @@ export const mockProducts: Product[] = [
     level: "Beginner",
     price: 299000,
     originalPrice: 499000,
-    image: "https://images.unsplash.com/photo-1555529771-35a38f59c754?w=400",
+    image: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400",
     description: "Tài liệu từ vựng TOEIC phổ biến kèm ví dụ thực tế",
     longDescription:
       "Ebook tập hợp 1000 từ vựng quan trọng nhất trong bài thi TOEIC, kèm ví dụ, ngữ cảnh và bản ghi âm luyện phát âm. Phù hợp cho người mới bắt đầu hoặc cần củng cố từ vựng nền tảng.",

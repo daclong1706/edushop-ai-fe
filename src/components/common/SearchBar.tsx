@@ -13,7 +13,7 @@ export const SearchBar = ({
   onChange,
 }: SearchBarProps) => {
   return (
-    <div className="relative w-full max-w-xs">
+    <div className="relative w-full md:min-w-sm">
       <span className="absolute inset-y-0 left-3 flex items-center text-gray-400 dark:text-gray-500">
         <FiSearch />
       </span>

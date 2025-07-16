@@ -1,14 +1,12 @@
 import type { Product } from "@/types/product";
 import React, { useState } from "react";
-import { MdChevronRight } from "react-icons/md";
 import { StarRating } from "../ui/StarRating";
 import Text from "../ui/Text";
 import Skeleton from "../ui/Skeleton";
 import clsx from "clsx";
-import Button from "../ui/Button";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-interface ProductCardProps {
+interface ProductCardMobileProps {
   product?: Product;
   onDetailClick?: (product: Product) => void;
   isLiked?: boolean;
@@ -17,7 +15,7 @@ interface ProductCardProps {
   loading?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
+const ProductCardMobile: React.FC<ProductCardMobileProps> = ({
   product,
   onDetailClick,
   isLiked,
@@ -29,10 +27,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       className={clsx(
-        "group relative rounded-md shadow-md transition duration-200 cursor-pointer flex flex-col",
-        loading
-          ? "animate-pulse bg-gray-100 dark:bg-gray-800"
-          : "hover:shadow-xl"
+        "group relative rounded transition duration-200 cursor-pointer flex flex-col",
+        loading ? "animate-pulse bg-gray-100 dark:bg-gray-800" : ""
       )}
     >
       {isSuggested && !loading && (
@@ -63,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Image */}
       <div
-        className="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded-t-md overflow-hidden"
+        className="w-full h-40 bg-gray-200 dark:bg-gray-700 rounded-t overflow-hidden"
         onClick={() => product && onDetailClick?.(product)}
       >
         {!loading && product?.image && (
@@ -77,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Content */}
       <div
-        className="flex flex-col flex-1 p-4 space-y-2"
+        className="flex flex-col flex-1 py-2"
         onClick={() => product && onDetailClick?.(product)}
       >
         <h3
@@ -87,7 +83,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {loading ? <Skeleton width="w-3/4" height="h-6" /> : product?.name}
         </h3>
 
-        <div className="text-sm text-gray-600 dark:text-gray-100  00 line-clamp-2 min-h-[40px]">
+        <div className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 min-h-[40px]">
           {loading ? (
             <>
               <Skeleton />
@@ -96,7 +92,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           ) : (
             <Text
               text={product?.description || ""}
-              className="text-gray-600 dark:text-gray-300"
+              className="text-gray-500 dark:text-gray-400"
             />
           )}
         </div>
@@ -114,32 +110,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </div>
 
-        <div className="flex-1" />
-
-        <div className="relative mt-1 border-t pt-3 border-gray-200 dark:border-gray-700 min-h-[36px]">
+        <div className="relative">
           {loading ? (
             <Skeleton width="w-20" height="h-4" />
           ) : (
             <p className="font-bold text-primary tracking-tight z-0 relative flex items-end gap-2 whitespace-nowrap">
-              {product?.price.toLocaleString()} VND
+              {product?.price.toLocaleString()} VNĐ
               {product && product.originalPrice > product.price && (
-                <span className="text-[14px] text-gray-500 line-through font-normal whitespace-nowrap dark:text-gray-400">
-                  {product.originalPrice.toLocaleString()} VND
+                <span className="text-[14px] text-gray-500 dark:text-gray-400 line-through font-normal whitespace-nowrap">
+                  {product.originalPrice.toLocaleString()} VNĐ
                 </span>
               )}
             </p>
-          )}
-
-          {!loading && product && (
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-              <Button
-                onClick={() => onDetailClick?.(product)}
-                className="w-full py-3"
-                iconRight={<MdChevronRight className="w-5 h-5 -mr-1" />}
-              >
-                Xem chi tiết
-              </Button>
-            </div>
           )}
         </div>
       </div>
@@ -147,4 +129,4 @@ const ProductCard: React.FC<ProductCardProps> = ({
   );
 };
 
-export default ProductCard;
+export default ProductCardMobile;

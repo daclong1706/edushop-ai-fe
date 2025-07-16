@@ -64,7 +64,7 @@ const DynamicFilterRenderer: React.FC<Props> = ({
                           rating={parseFloat(value)}
                           showValue={false}
                         />
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-600 dark:text-gray-100">
                           Từ {value} trở lên
                         </span>
                       </div>
@@ -80,6 +80,7 @@ const DynamicFilterRenderer: React.FC<Props> = ({
                 key={filter.key}
                 title={filter.label}
                 maxHeightPx={160}
+                className="border-t"
               >
                 <RadioGroup
                   name={filter.key}

@@ -11,9 +11,9 @@
   --font-roboto: "Roboto", sans-serif;
 }
 
-body {
+/* body {
   font-family: var(--font-roboto);
-}
+} */
 
 @keyframes fade-in-down {
   from {
@@ -47,4 +47,8 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #666;
+}
+
+.custom-scrollbar-x::-webkit-scrollbar {
+  height: 4px;
 }

@@ -88,7 +88,7 @@ export const Modal: React.FC<ModalProps> = ({
 
         {footer && (
           <div className="relative">
-            <div className="absolute -top-10 left-0 w-full h-10 pointer-events-none bg-gradient-to-t from-white dark:from-gray-900 to-transparent" />
+            <div className="absolute -top-9 left-0 w-full h-10 pointer-events-none bg-gradient-to-t from-white dark:from-gray-700 to-transparent" />
             <div className="px-6 pt-2 pb-4">{footer}</div>
           </div>
         )}

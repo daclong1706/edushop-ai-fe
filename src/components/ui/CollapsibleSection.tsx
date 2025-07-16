@@ -26,16 +26,14 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   const [shouldShowToggle, setShouldShowToggle] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Đo nội dung sau render
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
 
-    el.style.maxHeight = "none"; // mở rộng toàn phần để đo chính xác
+    el.style.maxHeight = "none";
     requestAnimationFrame(() => {
       const scrollHeight = el.scrollHeight;
       setShouldShowToggle(scrollHeight > maxHeightPx);
-      // reset lại để apply giới hạn
       el.style.maxHeight = isExpanded ? "none" : `${maxHeightPx}px`;
     });
   }, [children, maxHeightPx, isExpanded]);
@@ -43,7 +41,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   return (
     <div
       className={clsx(
-        "border-b border-gray-200 dark:border-gray-700 py-2",
+        "border-b border-gray-200 dark:border-gray-200 py-2",
         className
       )}
     >
@@ -91,7 +89,7 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
           {children}
 
           {isOpen && shouldShowToggle && !isExpanded && (
-            <div className="absolute bottom-0 left-0 w-full h-10 pointer-events-none bg-gradient-to-t from-white dark:from-gray-900 to-transparent" />
+            <div className="absolute bottom-0 left-0 w-full h-10 pointer-events-none bg-gradient-to-t from-white dark:from-gray-800 to-transparent" />
           )}
         </div>
 

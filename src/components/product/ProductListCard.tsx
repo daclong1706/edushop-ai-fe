@@ -4,6 +4,9 @@ import { MdChevronRight } from "react-icons/md";
 import { StarRating } from "../ui/StarRating";
 import Text from "../ui/Text";
 import Skeleton from "../ui/Skeleton";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+import clsx from "clsx";
 
 interface ProductListCardProps {
   product?: Product;
@@ -20,10 +23,15 @@ const ProductListCard: React.FC<ProductListCardProps> = ({
   onLikeClick,
   loading = false,
 }) => {
+  const location = useLocation();
+  const isHistoryPage = location.pathname === "/history";
   return (
-    <div className="flex gap-4 py-3 border-b border-gray-300 mx-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+    <div className="flex relative gap-4 py-3 border-b border-gray-300 md:mx-3 mx-0 hover:bg-gray-50 dark:hover:bg-gray-800 transition items-center">
       {/* Image */}
-      <div className="w-24 h-24 rounded bg-gray-200 dark:bg-gray-700 overflow-hidden flex-shrink-0">
+      <div
+        className="w-24 h-24 rounded bg-gray-200 dark:bg-gray-700 overflow-hidden flex-shrink-0"
+        onClick={() => product && onDetailClick?.(product)}
+      >
         {loading ? (
           <Skeleton width="w-24" height="h-24" />
         ) : (
@@ -35,16 +43,27 @@ const ProductListCard: React.FC<ProductListCardProps> = ({
         )}
       </div>
 
+      {!loading && onLikeClick && product && (
+        <button
+          onClick={() => onLikeClick(product.id)}
+          className="absolute top-3 right-2"
+          title={isLiked ? "Bỏ yêu thích" : "Thêm vào yêu thích"}
+        >
+          {isLiked ? <FaHeart className="text-red-600" /> : <FaRegHeart />}
+        </button>
+      )}
+
       {/* Content */}
-      <div className="flex flex-col justify-between flex-1">
+      <div
+        className="flex flex-col justify-between flex-1"
+        onClick={() => product && onDetailClick?.(product)}
+      >
         <div>
-          {/* Title */}
-          <h3 className="text-base font-semibold line-clamp-1">
+          <h3 className="text-base font-semibold leading-tight line-clamp-1 pr-6 dark:text-gray-100">
             {loading ? <Skeleton width="w-3/4" height="h-5" /> : product?.name}
           </h3>
 
-          {/* Description */}
-          <div className="mt-1">
+          <div className="mt-0.5">
             {loading ? (
               <>
                 <Skeleton />
@@ -53,13 +72,12 @@ const ProductListCard: React.FC<ProductListCardProps> = ({
             ) : (
               <Text
                 text={product?.description || ""}
-                className="text-sm text-gray-600 line-clamp-2"
+                className="text-sm text-gray-600 line-clamp-2 dark:text-gray-400"
               />
             )}
           </div>
 
-          {/* Rating */}
-          <div className="mt-1">
+          <div className="mt-0.5">
             {loading ? (
               <Skeleton width="w-24" height="h-5" />
             ) : (
@@ -73,17 +91,43 @@ const ProductListCard: React.FC<ProductListCardProps> = ({
           </div>
         </div>
 
-        {/* Price & Actions */}
-        <div className="flex justify-between items-center pt-2">
-          {loading ? (
-            <Skeleton width="w-20" height="h-4" />
-          ) : (
-            <span className="text-primary font-bold text-sm">
-              {product?.price.toLocaleString()} VND
-            </span>
-          )}
+        <div
+          className={clsx("pt-1", {
+            "flex justify-between items-center": true,
+          })}
+        >
+          <div
+            className={clsx({
+              "flex items-center gap-2": isHistoryPage,
+            })}
+          >
+            {loading ? (
+              <Skeleton width="w-20" height="h-4" />
+            ) : (
+              <p className="text-primary font-bold text-sm whitespace-nowrap">
+                {product?.price.toLocaleString()} VNĐ
+              </p>
+            )}
 
-          {!loading && (
+            {loading ? (
+              <Skeleton width="w-16" height="h-4 mt-1" />
+            ) : (
+              product &&
+              product.originalPrice > product.price &&
+              (isHistoryPage ? (
+                <p className="text-[12px] text-gray-500 line-through font-normal whitespace-nowrap">
+                  {product.originalPrice.toLocaleString()} VNĐ
+                </p>
+              ) : (
+                <p className="text-[12px] text-gray-500 line-through font-normal whitespace-nowrap mt-1">
+                  {product.originalPrice.toLocaleString()} VNĐ
+                </p>
+              ))
+            )}
+          </div>
+
+          {/* Xem chi tiết */}
+          {!loading && !isHistoryPage && (
             <div
               onClick={() => product && onDetailClick?.(product)}
               className="flex items-center text-sm text-primary font-medium cursor-pointer hover:text-primary-hover"
@@ -91,15 +135,6 @@ const ProductListCard: React.FC<ProductListCardProps> = ({
               <span>Xem chi tiết</span>
               <MdChevronRight className="w-4 h-4 ml-1" />
             </div>
-          )}
-
-          {!loading && product && onLikeClick && (
-            <button
-              onClick={() => onLikeClick(product?.id)}
-              className="text-lg"
-            >
-              {isLiked ? "❤️" : "🤍"}
-            </button>
           )}
         </div>
       </div>

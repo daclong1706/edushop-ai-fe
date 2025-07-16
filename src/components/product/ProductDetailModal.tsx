@@ -35,7 +35,11 @@ const ProductDetailModal: React.FC<Props> = ({
     <Modal
       open={isOpen}
       onClose={onClose}
-      title={<span className="text-xl font-semibold">{product.name}</span>}
+      title={
+        <span className="text-xl font-semibold dark:text-gray-100">
+          {product.name}
+        </span>
+      }
       footer={
         <div className="flex gap-2 justify-end">
           <Button
@@ -58,17 +62,15 @@ const ProductDetailModal: React.FC<Props> = ({
           </Button>
         </div>
       }
-      className="sm:max-w-sm md:max-w-lg w-full"
+      className="sm:max-w-sm md:max-w-lg w-full dark:bg-gray-700"
     >
       <div className="space-y-4">
-        {/* Ảnh */}
         <img
           src={product.image}
           alt={product.name}
           className="w-full h-60 object-cover rounded"
         />
 
-        {/* Đánh giá tổng */}
         <div className="flex items-center gap-2">
           <StarRating rating={product.rating} />
           <span className="text-[12px] text-gray-400">
@@ -76,7 +78,7 @@ const ProductDetailModal: React.FC<Props> = ({
           </span>
         </div>
 
-        {/* Giá cả */}
+        {/* Giá */}
         <div className="text-lg font-bold text-primary">
           {product.price.toLocaleString()} VND
           {product.originalPrice > product.price && (
@@ -102,13 +104,11 @@ const ProductDetailModal: React.FC<Props> = ({
           </li>
         </ul>
 
-        {/* Mô tả dài */}
         <p className="text-gray-800 dark:text-gray-200">
           {product.longDescription}
         </p>
 
         <div>
-          {/* Tính năng */}
           <CollapsibleSection title="Đặc điểm nổi bật">
             {product.features.length > 0 && (
               <div>
@@ -121,7 +121,6 @@ const ProductDetailModal: React.FC<Props> = ({
             )}
           </CollapsibleSection>
 
-          {/* Phần đánh giá người dùng */}
           <CollapsibleSection
             title="Đánh giá của người học"
             maxHeightPx={200}

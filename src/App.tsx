@@ -10,7 +10,14 @@ import { Toaster } from "sonner";
 function App() {
   return (
     <CartProvider>
-      <Toaster position="top-right" />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          classNames: {
+            icon: "text-primary",
+          },
+        }}
+      />
       <Router>
         <Layout>
           <Routes>

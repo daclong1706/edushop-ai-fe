@@ -23,7 +23,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
   return (
     <div className={clsx("flex items-center gap-0.5", className)}>
       {showValue && (
-        <span className="text-sm text-[#8B430A] font-bold mr-1">
+        <span className="text-sm text-[#8B430A] dark:text-[#d48240] font-bold mr-1">
           {rating.toFixed(1)}
         </span>
       )}

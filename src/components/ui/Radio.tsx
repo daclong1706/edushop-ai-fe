@@ -27,7 +27,9 @@ export const Radio: React.FC<RadioProps> = ({
     <label
       className={clsx(
         "flex items-center gap-2 cursor-pointer select-none p-1 rounded-md transition",
-        isChecked ? " text-primary" : "border-gray-300 hover:bg-gray-100",
+        isChecked
+          ? " text-primary"
+          : "border-gray-300 hover:bg-gray-100 hover:dark:bg-gray-400",
         disabled && "opacity-50 cursor-not-allowed",
         className
       )}
@@ -54,7 +56,7 @@ export const Radio: React.FC<RadioProps> = ({
       {isChecked ? (
         <FiCheckCircle className="text-primary w-5 h-5" />
       ) : (
-        <FiCircle className="text-gray-400 w-5 h-5" />
+        <FiCircle className="text-gray-400 w-5 h-5 dark:text-gray-100" />
       )}
 
       <span className="text-sm">{label}</span>

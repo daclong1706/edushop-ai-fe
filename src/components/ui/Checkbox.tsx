@@ -37,9 +37,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
 
       <div
         className={clsx(
-          "w-4 h-4 rounded-sm border-2 border-gray-700 flex items-center justify-center transition-colors",
+          "w-4 h-4 rounded-sm border-2 border-gray-700 flex items-center justify-center transition-colors dark:border-gray-100",
           "peer-checked:bg-primary peer-checked:border-primary",
-          disabled && "bg-gray-100 dark:bg-gray-800"
+          disabled && "bg-gray-100 dark:bg-gray-100"
         )}
       >
         <MdOutlineCheck
@@ -50,10 +50,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
         />
       </div>
 
-      <span className="text-gray-700 tracking-wide">{label}</span>
+      <span className="text-gray-700 tracking-wide dark:text-gray-100">
+        {label}
+      </span>
 
       {typeof count === "number" && (
-        <span className="text-gray-500 dark:text-gray-400 ml-auto text-xs">
+        <span className="text-gray-500 dark:text-gray-100 ml-auto text-xs">
           ({count.toLocaleString()})
         </span>
       )}
